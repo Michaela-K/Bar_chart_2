@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Bar Chart</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <h3 class="name">Name of Chart</h3>
+    <div id="container">
+      <div class="chartDetail" >
+        <div>
+          <p> Chart Name </p>
+          <input class="chartName" type="text" placeholder="eg. John's Bar Chart">
+        </div>
+        <div>
+          <p>Number of columns</p>
+          <input id="colNum" type="number" placeholder="eg. 3">
+        </div>
+        <!-- <div>
+          <p>Bar spacing</p>
+          <input id="barSpc"  placeholder="eg. 30px">
+        </div> -->
+        <div>
+          <p> Column names</p>
+          <input id="colName" type="text" placeholder="eg. cedar, pine, mahogany">
+        </div>
+        <div>
+          <p> Column colour</p>
+          <select id="colColor">
+          <option class="color" value="red">Red</option>
+          <option class="color" value="red">Red</option>
+          <option class="color" value="orange">Orange</option>
+          <option class="color" value="yellow">Yellow</option>
+          <option class="color" value="green">Green</option>
+          </select>
+        </div>
+        <div>
+          <p> Font Color</p>
+          <select id="fontColor">
+            <option class="color" value="pink">Pink</option>
+            <option class="color" value="pink">Pink</option>
+            <option class="color" value="purple">Purple</option>
+            <option class="color" value="orange">Orange</option>
+            <option class="color" value="black">Black</option>
+            <option class="color" value="limegreen">Lime</option>
+            </select>
+        </div>
+      </div>
+    
+    <!--chart start-->
+      <div class="chart">
+        <ul class="numbers">
+          <li><span class="percent">100%</span></li>
+          <li><span class="percent">90%</span></li>
+          <li><span class="percent">80%</span></li>
+          <li><span class="percent">70%</span></li>
+          <li><span class="percent">60%</span></li>
+          <li><span class="percent">50%</span></li>
+          <li><span class="percent">40%</span></li>
+          <li><span class="percent">30%</span></li>
+          <li><span class="percent">20%</span></li>
+          <li><span class="percent">10%</span></li>
+          <li><span class="percent">0%</span></li>
+        </ul>
+        <div class="barsContainer">
+          <ul class="bars">
+            <li><div class="bar bar_1" data-percentage="50"></div><span>Option1 </span></li>
+            <li><div class="bar bar_2" data-percentage="30"></div><span>Option2 </span></li>
+            <li><div class="bar bar_3" data-percentage="60"></div><span>Option3 </span></li>
+            <li><div class="bar bar_4" data-percentage="99"></div><span>Option4 </span></li>
+            <li><div class="bar bar_5" data-percentage="80"></div><span>Option5 </span></li>
+            <li><div class="bar bar_6" data-percentage="100"></div><span>Option6 </span></li>
+            <li><div class="bar bar_7" data-percentage="20"></div><span>Option7 </span></li>
+            <li><div class="bar bar_8" data-percentage="10"></div><span>Option8 </span></li>
+            <li><div class="bar bar_9" data-percentage="40"></div><span>Option9 </span></li>
+            <li><div class="bar bar_10" data-percentage="70"></div><span>Option10 </span></li>
+          </ul>
+          <form id="form_values" action="" method="post">
+            <input name="" id="li_1" value="50" class="field"/>
+            <input name="" id="li_2" value="30" class="field"/>
+            <input name="" id="li_3" value="60" class="field"/>
+            <input name="" id="li_4" value="99" class="field"/>
+            <input name="" id="li_5" value="80" class="field"/>
+            <input name="" id="li_6" value="100" class="field"/>
+            <input name="" id="li_7" value="20" class="field"/>
+            <input name="" id="li_8" value="10" class="field"/>
+            <input name="" id="li_9" value="40" class="field"/>
+            <input name="" id="li_10" value="70" class="field"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--chart end-->
+
+    <script type="text/javascript">
+    $('.chartDetail').keyup(function(e){   //Working
+			let code = e.which;
+			if(code ==13){
+				e.preventDefault();
+//CHART NAME
+				let cn = $('input.chartName').val();   //Working
+				$('h3.name').html(cn);
+//OPTION NAME
+        let items = $('ul.bars li span').text();   //CHanges the name of each Option, but only the first input name given
+        console.log(items);
+        let colNameInput = $('input#colName').val();
+        console.log(colNameInput);              //This is the list of Names you want to give to each bar chart
+          for (let i = 0; i < items.length; i++) {
+            items = items.split(' ');
+            items = colNameInput.split(',');;
+          $('ul.bars li span').each(function(item, value){
+            return $(this).text(items.shift());
+          });
+          }
+//NUMBER OF COLUMNS
+    
+      }
+		});
+//ADD COLUMNS
+  const myColumnOptions = {
+        50 : '50',
+        70 : '70'
+      };
+      let myCols = $('ul.bars');
+        $.each(myColumnOptions, function(val, text) {
+          myCols.append(
+                $('<li></li>').val(val).html(text)              //This adds the li
+      );
+      }); 
+      let myCol = $('ul.bars li');                             //This does not add the class, and so its not blue
+        $.each(function() {
+          myCol.addClass("bar");
+      }); 
+//SEND INPUT TO BAR LABEL
+
+//COLOUR OPTIONS
+const myOptions = {
+        blue : 'Blue',
+        purple : 'Purple'
+      };
+      let mySelect = $('#colColor');
+        $.each(myOptions, function(val, text) {
+            mySelect.append(
+                $('<option></option>').val(val).html(text)
+      );
+      }); 
+//CHANGE BAR COLOR 
+$(document).ready(function(){
+    $("select#colColor").change(function(){
+        let selectedColor = $(this).children("option:selected").val();
+        // console.log(selectedColor);
+        // alert("You have selected the color - " + selectedColor);
+        let barColor = $('ul.bars li div.bar');
+        if(selectedColor === "blue"){
+          barColor.css("background-color", "#17C0EB");
+        }else if(selectedColor == "red"){
+          barColor.css("background-color", "red");
+        }else if(selectedColor == "orange"){
+          barColor.css("background-color", "orange");
+        }else if(selectedColor == "yellow"){
+          barColor.css("background-color", "yellow");
+        }else if(selectedColor == "green"){
+          barColor.css("background-color", "green");
+        }else if(selectedColor == "purple"){
+          barColor.css("background-color", "purple");
+        }
+    });
+});
+//CHANGE FONT COLOR 
+$(document).ready(function(){
+    $("select#fontColor").change(function(){
+        let selectedCol = $(this).children("option:selected").val();
+        // console.log(selectedCol);
+        // alert("You have selected the color - " + selectedCol);
+        let fColor = $('body');
+        if(selectedCol === "pink"){
+          fColor.css("color", "rgb(250, 51, 151)");
+        }else if(selectedCol == "purple"){
+          fColor.css("color", "purple");
+        }else if(selectedCol == "orange"){
+          fColor.css("color", "orange");
+        }else if(selectedCol == "black"){
+          fColor.css("color", "black");
+        }else if(selectedCol == "limegreen"){
+          fColor.css("color", "rgb(105, 230, 33)");
+        };
+    });
+});
+//ANIMATE CHART
+      $(function(){                                    //ORIGINAL
+      $('.bars li .bar').each(function(key, bar){
+        let percentage = $(this).data('percentage');
+        $(this).animate({
+          'height' : percentage + '%'
+        },1000);
+      });
+    });
+    </script>
+
+  </body>
+</html>
+      
